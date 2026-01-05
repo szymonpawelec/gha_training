@@ -8,6 +8,8 @@ on:
 jobs:
   hello-world:
     runs-on: ubuntu-latest
+    environment:
+      name: dit
 
     steps:
       - name: Checkout code
@@ -18,3 +20,10 @@ jobs:
 
       - name: Show files
         run: ls -R
+
+      - name: Use the secret
+        env:
+          TOKEN: ${{ secrets.TEMPORARY_TOKEN }}
+        run: |
+          echo "Token length: ${#TOKEN}"  # Prints length, not value
+          if [ -n "$TOKEN" ]; then echo "✅ Token is set"; fi
